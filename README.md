@@ -173,8 +173,8 @@ Once recording starts, users see:
 #### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd voicescribe
+git clone https://github.com/anjali04853/PREPXL.git
+cd PREPXL
 ```
 
 #### 2. Configure Gemini API Key
@@ -237,7 +237,7 @@ Frontend starts at: http://localhost:5173
 ## Project Structure
 
 ```
-voicescribe/
+PREPXL/
 ├── frontend/                          # React frontend application
 │   ├── src/
 │   │   ├── components/               # React UI components
