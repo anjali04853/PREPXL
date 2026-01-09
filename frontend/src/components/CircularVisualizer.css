@@ -1,0 +1,284 @@
+/**
+ * CircularVisualizer styles
+ * 
+ * Requirements: 10.1, 10.2, 10.3, 10.5, NFR 1.5, 1.6, 1.7
+ * - Scale visualizer for mobile (320px+), tablet, desktop
+ * - Handle orientation changes
+ * - Support touch interactions on mobile devices
+ * - Add gradient colors and glow effects
+ * - Smooth idle animation when not recording
+ * - Professional visual polish
+ */
+
+/* ============================================
+   Base Visualizer Styles
+   ============================================ */
+.circular-visualizer {
+  display: block;
+  margin: 0 auto;
+  /* Prevent text selection on touch */
+  user-select: none;
+  -webkit-user-select: none;
+  /* Smooth transitions for size changes */
+  transition: 
+    width 0.3s ease, 
+    height 0.3s ease, 
+    transform 0.15s ease-out,
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
+  /* Base glow effect */
+  filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.2));
+}
+
+.circular-visualizer.pressed {
+  transform: scale(0.98);
+}
+
+/* ============================================
+   Idle State - Subtle Breathing Animation
+   ============================================ */
+.circular-visualizer:not(.recording):not(.paused) {
+  animation: idle-breathe 4s ease-in-out infinite;
+}
+
+@keyframes idle-breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.25));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(102, 126, 234, 0.4));
+    transform: scale(1.01);
+  }
+}
+
+/* ============================================
+   Recording State - Active Glow
+   ============================================ */
+.circular-visualizer.recording {
+  filter: drop-shadow(0 0 30px rgba(79, 172, 254, 0.5));
+  animation: recording-pulse 2s ease-in-out infinite;
+}
+
+@keyframes recording-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 25px rgba(79, 172, 254, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(79, 172, 254, 0.6));
+  }
+}
+
+/* ============================================
+   Paused State - Dimmed Glow
+   ============================================ */
+.circular-visualizer.paused {
+  filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.3));
+  opacity: 0.85;
+}
+
+/* ============================================
+   Container Styles
+   ============================================ */
+.visualizer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Ambient glow behind visualizer */
+.visualizer-container::before {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.05) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+  animation: ambient-glow 6s ease-in-out infinite;
+}
+
+@keyframes ambient-glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+/* ============================================
+   Mobile Styles (320px - 479px)
+   ============================================ */
+@media (max-width: 479px) {
+  .visualizer-container {
+    padding: 0.5rem;
+  }
+  
+  .circular-visualizer {
+    /* Ensure minimum touch target size */
+    min-width: 200px;
+    min-height: 200px;
+  }
+  
+  .visualizer-container::before {
+    width: 90%;
+    height: 90%;
+  }
+}
+
+/* ============================================
+   Tablet Styles (480px - 767px)
+   ============================================ */
+@media (min-width: 480px) and (max-width: 767px) {
+  .visualizer-container {
+    padding: 1rem;
+  }
+}
+
+/* ============================================
+   Desktop Styles (768px+)
+   ============================================ */
+@media (min-width: 768px) {
+  .visualizer-container {
+    padding: 1.5rem;
+  }
+  
+  .circular-visualizer.recording {
+    filter: drop-shadow(0 0 40px rgba(79, 172, 254, 0.5));
+  }
+}
+
+/* ============================================
+   Orientation Adjustments
+   ============================================ */
+@media (orientation: portrait) {
+  .visualizer-container {
+    min-height: 40vh;
+  }
+}
+
+@media (orientation: landscape) {
+  .visualizer-container {
+    max-height: 60vh;
+  }
+}
+
+/* ============================================
+   Touch Device Styles
+   ============================================ */
+@media (hover: none) and (pointer: coarse) {
+  .circular-visualizer {
+    min-width: 220px;
+    min-height: 220px;
+  }
+  
+  .circular-visualizer:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ============================================
+   High DPI Display Adjustments
+   ============================================ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .circular-visualizer {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* ============================================
+   Reduced Motion Preference
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .circular-visualizer,
+  .circular-visualizer.recording,
+  .circular-visualizer:not(.recording):not(.paused) {
+    animation: none;
+    transition: none;
+  }
+  
+  .circular-visualizer.pressed {
+    transform: none;
+  }
+  
+  .visualizer-container::before {
+    animation: none;
+  }
+}
+
+/* ============================================
+   Theme-Specific Container Backgrounds
+   ============================================ */
+.visualizer-container.dark {
+  background: radial-gradient(
+    circle at center, 
+    rgba(0, 0, 0, 0.4) 0%, 
+    transparent 70%
+  );
+}
+
+.visualizer-container.dark::before {
+  background: radial-gradient(
+    circle,
+    rgba(79, 172, 254, 0.12) 0%,
+    rgba(102, 126, 234, 0.08) 40%,
+    transparent 70%
+  );
+}
+
+.visualizer-container.light {
+  background: radial-gradient(
+    circle at center, 
+    rgba(255, 255, 255, 0.5) 0%, 
+    transparent 70%
+  );
+}
+
+.visualizer-container.light::before {
+  background: radial-gradient(
+    circle,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.05) 40%,
+    transparent 70%
+  );
+}
+
+.visualizer-container.gradient {
+  background: radial-gradient(
+    circle at center, 
+    rgba(128, 0, 255, 0.15) 0%, 
+    transparent 70%
+  );
+}
+
+.visualizer-container.gradient::before {
+  background: radial-gradient(
+    circle,
+    rgba(240, 147, 251, 0.15) 0%,
+    rgba(245, 87, 108, 0.08) 40%,
+    transparent 70%
+  );
+}
+
+/* ============================================
+   Focus Styles for Accessibility
+   ============================================ */
+.circular-visualizer:focus-visible {
+  outline: 3px solid rgba(102, 126, 234, 0.8);
+  outline-offset: 4px;
+}

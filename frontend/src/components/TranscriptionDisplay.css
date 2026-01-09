@@ -1,0 +1,254 @@
+/**
+ * TranscriptionDisplay styles
+ * 
+ * Requirements: 7.4, 7.5
+ * - Smooth text transitions
+ * - Clear visual distinction between interim and final text
+ */
+
+.transcription-display {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Session Controls */
+.transcription-controls {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.control-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.control-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.control-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.control-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.control-button .icon {
+  font-size: 1rem;
+}
+
+.control-button.pause {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+.control-button.pause:hover:not(:disabled) {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.control-button.resume {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.control-button.resume:hover:not(:disabled) {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.control-button.copy {
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196f3;
+}
+
+.control-button.copy:hover:not(:disabled) {
+  background: rgba(33, 150, 243, 0.3);
+}
+
+.control-button.download {
+  background: rgba(156, 39, 176, 0.2);
+  color: #ce93d8;
+}
+
+.control-button.download:hover:not(:disabled) {
+  background: rgba(156, 39, 176, 0.3);
+}
+
+/* Transcription Container */
+.transcription-container {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0 0 12px 12px;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  scroll-behavior: smooth;
+}
+
+.transcription-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.transcription-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.transcription-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.transcription-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Placeholder Text */
+.placeholder-text {
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Transcription Segments */
+.transcription-segment {
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.transcription-segment.final {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.transcription-segment.interim {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Scroll to Bottom Button */
+.scroll-to-bottom {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  background: rgba(33, 150, 243, 0.9);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+.scroll-to-bottom:hover {
+  background: rgba(33, 150, 243, 1);
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Light theme support */
+@media (prefers-color-scheme: light) {
+  .transcription-controls {
+    background: rgba(0, 0, 0, 0.05);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .control-button {
+    background: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .control-button:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .transcription-container {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .transcription-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .transcription-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .placeholder-text {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .transcription-segment.final {
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  .transcription-segment.interim {
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .transcription-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .control-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .transcription-container {
+    min-height: 150px;
+    max-height: 300px;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#667eea" />
+    <meta name="description" content="VoiceScribe - Real-time audio transcription with beautiful visualization. Transform your voice into text instantly with AI-powered transcription." />
+    <meta name="keywords" content="transcription, audio, voice, speech-to-text, AI, real-time" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="VoiceScribe - Real-Time Audio Transcription" />
+    <meta property="og:description" content="Transform your voice into text instantly with AI-powered transcription and beautiful audio visualization." />
+    
+    <!-- PWA Support -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="VoiceScribe" />
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Modern font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <title>VoiceScribe - Real-Time Audio Transcription</title>
+    
+    <style>
+      /* Critical CSS for initial load */
+      body {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+        min-height: 100vh;
+      }
+      
+      @media (prefers-color-scheme: light) {
+        body {
+          background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+        }
+      }
+      
+      /* Loading state */
+      #root:empty::after {
+        content: '';
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 40vh auto;
+        border: 3px solid rgba(102, 126, 234, 0.2);
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

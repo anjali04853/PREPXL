@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: realtime-audio-transcription-backend
+
+server:
+  port: 8080
+
+# Gemini API Configuration
+gemini:
+  api:
+    key: ${GEMINI_API_KEY:AIzaSyALSDCJ54nVwlBXiJ9ZIY08Tn0Kj9Yads8}
+    base-url: https://generativelanguage.googleapis.com/v1beta
+    model: gemini-1.5-flash-latest
+    timeout:
+      connect: 5000
+      read: 30000
+    # Throttle settings to avoid rate limits
+    min-request-interval-ms: 5000
+
+# WebSocket Configuration
+websocket:
+  path: /ws/transcription
+  max-session-idle-timeout: 300000  # 5 minutes
+
+# Circuit Breaker Configuration
+resilience:
+  circuit-breaker:
+    failure-rate-threshold: 50
+    wait-duration-in-open-state: 30000  # 30 seconds
+    sliding-window-size: 10
+    minimum-number-of-calls: 5
+  retry:
+    max-attempts: 3
+    base-delay: 1000  # 1 second
+    max-delay: 30000  # 30 seconds
+
+# Logging
+logging:
+  level:
+    com.transcription: DEBUG
+    org.springframework.web.reactive: INFO
